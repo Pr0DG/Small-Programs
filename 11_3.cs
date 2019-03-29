@@ -114,25 +114,23 @@ namespace _11_3
         }
         public void Main_010()
         {
-            Console.WriteLine((new Byte()).set(0).set(2).set(5).get());
+            Console.WriteLine((new Byte()).Set(0).Set(2).Set(5).Get());
             Console.ReadKey();
         }
         class Byte
         {
             private bool[] b = new bool[8];
-            public int get()
+            public int Get()
             {
                 int sum = 0;
                 for (int index = 0; index < 8; ++index)
                     sum += (b[index]) ? (int)Math.Pow(2.0, (7 - index)) : 0;
                 return sum;
             }
-            public Byte set(int n)
+            public Byte Set(int n)
             {
                 b[7 - n] = true;
-                Byte newB = new Byte();
-                newB.b = b;
-                return newB;
+                return this;
             }
         }
     }
