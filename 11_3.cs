@@ -242,7 +242,7 @@ namespace _1_11
             private double x;
             private double y;
         }
-        public void Main_09()
+        public void Main_09() // Wrong result TO TEST
         {
             Point point = new Point().X(8.66025).Y(5.0);
             Console.WriteLine("{0} {1} {2} {3}",
@@ -253,6 +253,54 @@ namespace _1_11
                               point.X(), point.Y(),
                               point.R(), point.Phi());
         }
+        class Triangle
+        {
+            public class Point
+            {
+                public Point(int x, int y)
+                {
+                    X = x;
+                    Y = y;
+                }
+                public int X { get; set; }
+                public int Y { get; set; }
+                public override string ToString()
+                {
+                    return X + " " + Y;
+                }
+            }
+            public Triangle(Point p1, Point p2, Point p3)
+            {
+                this.p1 = p1;
+                this.p2 = p2;
+                this.p3 = p3;
+            }
+            public double Area()
+            {
+                double a = Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2));
+                double b = Math.Sqrt(Math.Pow(p1.X - p3.X, 2) + Math.Pow(p1.Y - p3.Y, 2));
+                double c = Math.Sqrt(Math.Pow(p3.X - p2.X, 2) + Math.Pow(p3.Y - p2.Y, 2));
+                double s = (a + b + c) / 2;
+                return Math.Sqrt(s * (s - a) * (s - b) * (s - c));
+            }
+            public Point Center()
+            {
+                return new Point((p1.X + p2.X + p3.X) / 3,
+                                 (p1.Y + p2.Y + p3.Y) / 3);
+            }
+            // Private section
+            private Point p1;
+            private Point p2;
+            private Point p3;
+        }
+        public void Main_013()
+        {
+            Triangle triangle = new Triangle(new Triangle.Point(-3, 2),
+                                             new Triangle.Point(5, 4),
+                                             new Triangle.Point(1, -6));
+            Console.WriteLine(triangle.Area());
+            Triangle.Point center = triangle.Center();
+            Console.WriteLine(center);
+        }
     }
 }
-
