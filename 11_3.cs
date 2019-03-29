@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _11_3
+namespace _1_11
 {
     class Application
     {
@@ -133,5 +133,126 @@ namespace _11_3
                 return this;
             }
         }
+        class Bottle
+        {
+            public Bottle(double capacity)
+            {
+                this.capacity = capacity;
+                volume = 0;
+            }
+            private double capacity;
+            private double volume;
+            public double Volume { get { return volume; } }
+            public double Fill(double liquid)
+            {
+                volume += (capacity - Volume > liquid) ? liquid : liquid = capacity - Volume;
+                return liquid;
+            }
+            public double Pour(double liquid)
+            {
+                volume -= (volume > liquid) ? liquid : liquid = volume;
+                return liquid;
+            }
+        }
+        public void Main_06()
+        {
+            Bottle bottle = new Bottle(4.5);
+            Console.WriteLine("{0} {1} {2} {3} {4}",
+                              bottle.Volume,
+                              bottle.Fill(3.5),
+                              bottle.Volume,
+                              bottle.Pour(5.5),
+                              bottle.Volume);
+        }
+        class Polygon
+        {
+            public Polygon(int corners, double sideLength)
+            {
+                this.corners = corners;
+                this.sideLength = sideLength;
+            }
+            public double Area()
+            {
+                return 1.0 / 4 * corners * sideLength * sideLength * 1.0 / Math.Tan(Math.PI / corners);
+            }
+            public Polygon Scaled(double scale)
+            {
+                return new Polygon(corners, sideLength * scale);
+            }
+            public void Scale(double scale)
+            {
+                sideLength *= scale;
+            }
+            // Private properties / fields
+            private int corners;
+            private double sideLength;
+        }
+        public void Main_07()
+        {
+            Polygon polygon = new Polygon(7, 10.0);
+            Console.WriteLine(polygon.Area());
+            Console.WriteLine(polygon.Scaled(2.0).Area());
+            polygon.Scale(2.0);
+            Console.WriteLine(polygon.Area());
+        }
+        class Point
+        {
+            public Point X(double x)
+            {
+                this.x = x;
+                return this;
+            }
+            public Point Y(double y)
+            {
+                this.y = y;
+                return this;
+            }
+            public double X() { return x; }
+            public double Y() { return y; }
+            public Point R(double r)
+            {
+                x = r * Math.Cos(Phi());
+                y = r * Math.Sin(Phi());
+                return this;
+            }
+            public double R()
+            {
+                return Math.Sqrt(x * x + y * y);
+            }
+            public double Phi()
+            {
+                if (x > 0 && y >= 0)
+                    return Math.Atan(y / x);
+                if (x > 0 && y < 0)
+                    return Math.Atan(y / x) + Math.PI * 2;
+                if (x < 0)
+                    return Math.Atan(y / x) + Math.PI;
+                if (x == 0 && y > 0)
+                    return Math.PI / 2;
+                else
+                    return Math.PI * 3.0 / 2;
+            }
+            public Point Phi(double phi)
+            {
+                x = R() * Math.Cos(phi);
+                y = R() * Math.Sin(phi);
+                return this;
+            }
+            // Private fields
+            private double x;
+            private double y;
+        }
+        public void Main_09()
+        {
+            Point point = new Point().X(8.66025).Y(5.0);
+            Console.WriteLine("{0} {1} {2} {3}",
+                              point.X(), point.Y(),
+                              point.R(), point.Phi());
+            point.Phi(60.0);
+            Console.WriteLine("{0} {1} {2} {3}",
+                              point.X(), point.Y(),
+                              point.R(), point.Phi());
+        }
     }
 }
+
